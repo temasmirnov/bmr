@@ -13,10 +13,13 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    
+    <? if($model->photo) : ?>
+        <img alt="" src="/images/trainers/<?= $model->photo; ?>" />
+    <? endif; ?>
+    <?= $form->field($model, 'photo')->fileInput() ?>
 
-    <?= $form->field($model, 'photo')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'about')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'about')->textarea() ?>
 
     <?= $form->field($model, 'income')->textInput(['maxlength' => true]) ?>
 

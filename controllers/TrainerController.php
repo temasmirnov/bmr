@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * TrainerController implements the CRUD actions for Trainer model.
@@ -64,14 +65,19 @@ class TrainerController extends Controller
     public function actionCreate()
     {
         $model = new Trainer();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->trainer_id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        
+        if(Yii::$app->request->isPost) {
+            $model->load(Yii::$app->request->post());
+            $model->photo = UploadedFile::getInstanceByName('Trainer[photo]');
+            
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->trainer_id]);
+            }
         }
+         
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**

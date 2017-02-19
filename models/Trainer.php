@@ -34,7 +34,8 @@ class Trainer extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 100],
-            [['photo', 'income'], 'string', 'max' => 45],
+            [['income'], 'string', 'max' => 45],
+            [['photo'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
             [['about'], 'string', 'max' => 5000],
         ];
     }
@@ -53,6 +54,21 @@ class Trainer extends \yii\db\ActiveRecord
         ];
     }
 
+    public function beforeSave($insert) {
+        if(parent::beforeSave($insert)) {
+            
+            if($this->photo && $insert) {
+                $fname = Yii::$app->security->generateRandomString(8) . "." . $this->photo->extension;
+                $this->photo->saveAs("images/trainers/" . $fname);
+                $this->photo = $fname;
+            }
+            
+            return true;
+        }
+        
+        return false;
+    }
+    
     /**
      * @return \yii\db\ActiveQuery
      */
