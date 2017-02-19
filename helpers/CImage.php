@@ -1,5 +1,9 @@
 <?php
 
+namespace app\helpers;
+
+use yii;
+
 class CImage {
 
     public static function getImage($fname, $entity, $width = null, $height = null) {

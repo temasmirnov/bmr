@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use Yii\web\UploadedFile;
+use app\helpers\CImage;
 
 /**
  * This is the model class for table "trainer".
@@ -88,6 +89,16 @@ class Trainer extends \yii\db\ActiveRecord
         }
         
         return false;
+    }
+    
+    public function afterDelete() {        
+        $image_path = Yii::$app->basePath . '/web/images/trainers/' . $this->oldRecord->photo;
+        if(file_exists($image_path) && is_file($image_path)) {
+            CImage::removeResizedImages($this->oldRecord->photo, 'trainers');
+            unlink($image_path);
+        }
+        
+        return true;
     }
     
     /**
