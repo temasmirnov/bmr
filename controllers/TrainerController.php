@@ -89,14 +89,25 @@ class TrainerController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->trainer_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+        
+        if(Yii::$app->request->isPost) {
+            $old_name = $model->photo;
+            
+            $model->load(Yii::$app->request->post());
+            $model->photo = UploadedFile::getInstance($model, "photo");
+            
+            if(!$model->photo) {
+                $model->photo = $old_name;
+            }
+            
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->trainer_id]);
+            }
         }
+        
+        return $this->render('update', [
+            'model' => $model,
+        ]);
     }
 
     /**

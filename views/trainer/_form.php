@@ -14,10 +14,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     
-    <? if($model->photo) : ?>
-        <img alt="" src="/images/trainers/<?= $model->photo; ?>" />
-    <? endif; ?>
     <?= $form->field($model, 'photo')->fileInput() ?>
+    <? if($model->photo) : ?>
+        <img style="margin-bottom:20px;" alt="" src="/images/trainers/<?= $model->photo; ?>" />
+    <? endif; ?>
 
     <?= $form->field($model, 'about')->textarea() ?>
 

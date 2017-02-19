@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use Yii\web\UploadedFile;
 
 /**
  * This is the model class for table "trainer".
@@ -18,6 +19,8 @@ use Yii;
  */
 class Trainer extends \yii\db\ActiveRecord
 {
+    public $oldRecord;
+    
     /**
      * @inheritdoc
      */
@@ -53,11 +56,29 @@ class Trainer extends \yii\db\ActiveRecord
             'income' => 'Доход',
         ];
     }
+    
+    public function afterFind() {
+        $this->oldRecord = clone $this;
+        return parent::afterFind();
+    }
 
     public function beforeSave($insert) {
         if(parent::beforeSave($insert)) {
-            
+            // добавление записи
             if($this->photo && $insert) {
+                $fname = Yii::$app->security->generateRandomString(8) . "." . $this->photo->extension;
+                $this->photo->saveAs("images/trainers/" . $fname);
+                $this->photo = $fname;
+            }
+            
+            // редактирование записи
+            if($this->photo instanceof UploadedFile && !$insert) {                
+                // удаляем старый файл
+                $fpath = Yii::$app->basePath . "/web/images/trainers/" . $this->oldRecord->photo;
+                if($this->photo && file_exists($fpath)) {
+                    unlink($fpath);
+                }
+                
                 $fname = Yii::$app->security->generateRandomString(8) . "." . $this->photo->extension;
                 $this->photo->saveAs("images/trainers/" . $fname);
                 $this->photo = $fname;
