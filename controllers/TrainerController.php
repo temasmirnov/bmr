@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
+require_once Yii::$app->basePath . "/helpers/CImage.php";
+
 /**
  * TrainerController implements the CRUD actions for Trainer model.
  */
