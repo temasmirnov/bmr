@@ -7,28 +7,29 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Trainer */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Trainers', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Тренеры', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="trainer-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <? if(!Yii::$app->user->isGuest) : ?>
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->trainer_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->trainer_id], [
+        <?= Html::a('Изменить', ['update', 'id' => $model->trainer_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->trainer_id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы уверены, что хотите удалить этого тренера?',
                 'method' => 'post',
             ],
         ]) ?>
     </p>
+    <? endif; ?>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'trainer_id',
             'name',
             'photo',
             'about',
