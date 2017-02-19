@@ -37,9 +37,9 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Главная', 'url' => ['/site/index']],
+            ['label' => 'Тренеры', 'url' => ['/trainer/index']],
             ['label' => 'Контакты', 'url' => ['/site/contact']],
-            ['label' => 'Разборы', 'url' => ['/razbor/index'], 'visible' => !Yii::$app->user->isGuest],
-            ['label' => 'Тренеры', 'url' => ['/trainer/index'], 'visible' => !Yii::$app->user->isGuest],
+            ['label' => 'Разборы', 'url' => ['/razbor/index'], 'visible' => !Yii::$app->user->isGuest],            
             Yii::$app->user->isGuest ? (
                 ['label' => 'Вход', 'url' => ['/site/login'], 'visible' => false]
             ) : (
