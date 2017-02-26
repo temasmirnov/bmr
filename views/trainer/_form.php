@@ -15,6 +15,21 @@ use app\helpers\CImage;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     
+    <?=
+        $form->field($model, 'birthday')->widget(\yii\jui\DatePicker::classname(), [
+            'language' => 'ru',
+            'dateFormat' => 'dd.MM.yyyy',
+            'clientOptions' => [
+                'changeMonth' => true,
+                'changeYear' => true,
+                'yearRange' => '1950:c'
+            ],
+            'options' => [
+                'class' => 'form-control'
+            ]
+        ]);
+    ?>
+    
     <?= Html::activeLabel($model, "photo"); ?>
     <? if($model->photo) : ?>
     <div>

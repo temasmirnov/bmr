@@ -38,6 +38,7 @@ class Trainer extends \yii\db\ActiveRecord
         return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 100],
+            [['birthday'], 'string', 'max' => 15],
             [['income'], 'string', 'max' => 45],
             [['photo'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
             [['about'], 'string', 'max' => 5000],
@@ -55,6 +56,7 @@ class Trainer extends \yii\db\ActiveRecord
             'photo' => 'Фото',
             'about' => 'О тренере',
             'income' => 'Доход',
+            'birthday' => 'Дата рождения'
         ];
     }
     
@@ -116,4 +118,11 @@ class Trainer extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Razbor::className(), ['razbor_id' => 'razbor_id'])->viaTable('razbor_has_trainer', ['trainer_id' => 'trainer_id']);
     }
+    
+    public function getAge() {
+        return \DateTime::createFromFormat('d.m.Y', $this->birthday)
+            ->diff(new \DateTime('now'))
+            ->y;
+    }
+    
 }

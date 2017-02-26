@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -9,24 +9,21 @@ use yii\grid\GridView;
 $this->title = 'Тренеры';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="trainer-index">
+<div class="trainers-page">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <? if(!Yii::$app->user->isGuest) : ?>
     <p>
         <?= Html::a('Добавить тренера', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            
-            'name',
-            'photo',
-            'about',
-            'income',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+    <? endif; ?>
+    
+    <?php
+        echo ListView::widget([
+            'dataProvider' => $dataProvider,
+            "itemView" => "_view",
+            "summary" => ""
+        ]);
+    ?>
 </div>

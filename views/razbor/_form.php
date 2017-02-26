@@ -17,8 +17,11 @@ use yii\widgets\ActiveForm;
     <?=
         $form->field($model, 'razbor_date')->widget(\yii\jui\DatePicker::classname(), [
             'language' => 'ru',
-            'dateFormat' => 'dd.MM.yyyy'
-        ]) 
+            'dateFormat' => 'dd.MM.yyyy',
+            'options' => [
+                'class' => 'form-control'
+            ]
+        ]);
     ?>
 
     <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>

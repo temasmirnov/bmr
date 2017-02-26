@@ -113,3 +113,20 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.trainers-page .trainer {
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.trainers-page .trainer .trainer-photo {
+    margin-right: 20px;
+}
+
+.trainers-page .trainer h3 {
+    margin-top: 10px;
+}
+
+.trainers-page .trainer-about {
+    margin: 10px 0;
+}
